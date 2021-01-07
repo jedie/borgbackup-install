@@ -1,0 +1,5 @@
+.*
+!.gitignore
+
+# always install the latest version:
+poetry.lock
