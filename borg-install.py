@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 APT_PACKAGES = (
-    'python3 python3-dev python3-pip python3-virtualenv libssl-dev'
+    'python3 python3-dev python3-pip python3-venv libssl-dev'
     ' openssl libacl1-dev libacl1 build-essential libfuse-dev fuse pkg-config'
 )
 
