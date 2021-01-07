@@ -1,8 +1,16 @@
 # borgbackup-poetry
 
-fake project to install and use [borg backup](https://github.com/borgbackup/borg) via poetry
+fake project to install and use [borg backup](https://github.com/borgbackup/borg) via [poetry](https://python-poetry.org/) and a `Makefile`:
 
-e.g.:
+* [install the dependencies for Debian / Ubuntu via `apt-get`](https://borgbackup.readthedocs.io/en/stable/installation.html#debian-ubuntu)
+* install `borg` in virtualenv via Poetry 
+* link `borg` into `PATH` e.g.: `~/.local/bin/`
+
+So `borg` is callable from everywhere and it's easy to update ;)
+
+## install
+
+Get the helper sources:
 
 ```bash
 ~$ git clone https://github.com/jedie/borgbackup-poetry.git
@@ -13,6 +21,7 @@ apt-get-install        install the dependencies for Debian / Ubuntu
 install                install project via poetry
 update                 update the sources and installation
 ```
+
 
 To install borg backup call this:
 
@@ -62,4 +71,13 @@ You can now call "borg" and "borgfs" from commandline!
 ~/borgbackup-poetry$ cd
 ~$ borg --version
 borg 1.1.15
+```
+
+## update
+
+Just update the helper sources and borg e.g.:
+
+```bash
+~$ cd borgbackup-poetry
+~/borgbackup-poetry$ make update
 ```
