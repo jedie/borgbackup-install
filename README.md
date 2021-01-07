@@ -1,83 +1,103 @@
-# borgbackup-poetry
+# BorgBackup-install
 
-fake project to install and use [borg backup](https://github.com/borgbackup/borg) via [poetry](https://python-poetry.org/) and a `Makefile`:
+Simple Python script to install/update [borg backup](https://github.com/BorgBackup/borg)
 
-* [install the dependencies for Debian / Ubuntu via `apt-get`](https://borgbackup.readthedocs.io/en/stable/installation.html#debian-ubuntu)
-* install `borg` in virtualenv via Poetry 
-* link `borg` into `PATH` e.g.: `~/.local/bin/`
+What is does:
 
-So `borg` is callable from everywhere and it's easy to update ;)
+* install dependencies (for Debian / Ubuntu)
+* Install/update Borg in venv into: `/opt/borgbackup-env/`
+* Create symlink in `/usr/local/bin/borg`
 
-## install
+So `borg` should be callable everywhere ;)
 
-Get the helper sources:
-
-```bash
-~$ git clone https://github.com/jedie/borgbackup-poetry.git
-~$ cd borgbackup-poetry
-~/borgbackup-poetry$ make
-install-poetry         install or update poetry
-apt-get-install        install the dependencies for Debian / Ubuntu
-install                install project via poetry
-update                 update the sources and installation
-```
+`borg-install.py` is a cli and a shell.
 
 
-To install borg backup call this:
-
-* `make install-poetry`
-* `make apt-get-install`
-* `make install`
+## get the sources
 
 e.g.:
 
 ```bash
-~/borgbackup-poetry$ make install-poetry
-pip3 install -U pip
+~$ git clone https://github.com/jedie/BorgBackup-install.git
+~$ cd BorgBackup-install
+~/BorgBackup-install$ $ sudo ./borg-install.py help
+Welcome to BordBackup install shell
+
+
+Documented commands (type help <topic>):
+ help        - List available commands with 'help' or detailed help with 'help command'.
+ install     - install BorgBackup using virtualenv and pip
+ quit        - Exit this shell. (Or just hit Ctrl-C ;)
+ uninstall   - remove BorgBackup installation
+ update      - update BorgBackup installation
+```
+
+
+## install
+
+To install dependencies for Debian / Ubuntu, create virtualenv and symlinks, call:
+
+```bash
+~/borgbackup-install$ sudo ./borg-install.py 
+Welcome to BordBackup install shell
+
+
+Documented commands (type help <topic>):
+ help        - List available commands with 'help' or detailed help with 'help command'.
+ install     - install BorgBackup using virtualenv and pip
+ quit        - Exit this shell. (Or just hit Ctrl-C ;)
+ uninstall   - remove BorgBackup installation
+ update      - update BorgBackup installation
+
+(borg-install) apt_install
+
+
+____________________________________________________________________________________________________
+ *** install the dependencies for Debian / Ubuntu ***
+(call: 'apt-get install python3 python3-dev python3-pip python3-virtualenv libssl-dev openssl libacl1-dev libacl1 build-essential libfuse-dev fuse pkg-config')
+
 ...
-pip3 install -U poetry
+____________________________________________________________________________________________________
+ *** Create venv in "/opt/borgbackup-env" ***
+(call: 'python3 -m venv /opt/borgbackup-env')
 ...
 
-~/borgbackup-poetry$ make apt-get-install
-sudo apt-get install python3 python3-dev python3-pip python3-virtualenv \
-libssl-dev openssl \
-libacl1-dev libacl1 \
-build-essential \
-libfuse-dev fuse pkg-config
+____________________________________________________________________________________________________
+ *** Update pip in venv ***
+(call: '/opt/borgbackup-env/bin/pip3 install --upgrade pip wheel')
 ...
 
-~/borgbackup-poetry$ make install
-...
-Installing dependencies from lock file
+____________________________________________________________________________________________________
+ *** Install "borgbackup[fuse]" via pip ***
+(call: '/opt/borgbackup-env/bin/pip3 install borgbackup[fuse]')
 
-Package operations: 2 installs, 0 updates, 0 removals
+Collecting borgbackup[fuse]
+  Using cached borgbackup-1.1.15-cp38-cp38-linux_x86_64.whl
+Collecting llfuse>=1.3.4
+  Using cached llfuse-1.3.8-cp38-cp38-linux_x86_64.whl
+Installing collected packages: llfuse, borgbackup
+Successfully installed borgbackup-1.1.15 llfuse-1.3.8
 
-  • Installing llfuse (1.3.8)
-  • Installing borgbackup (1.1.15)
-  
-poetry run python3 link_helper.py
 
-Symlink "borg" and "borgfs" into PATH...
+ *** Symlink "/opt/borgbackup-env/bin/borg" to "/usr/local/bin" ***
 
-"borg" found in "~/.cache/pypoetry/virtualenvs/borgbackup-poetry-sCSN7rR2-py3.8/bin/borg".
-"borgfs" found in "~/.cache/pypoetry/virtualenvs/borgbackup-poetry-sCSN7rR2-py3.8/bin/borgfs".
-"poetry" found in "~/.local/bin/poetry".
- * Use bin path: "~/.local/bin"
- * Symlink "~/.cache/pypoetry/virtualenvs/borgbackup-poetry-sCSN7rR2-py3.8/bin/borg" to "~/.local/bin/borg"
- * Symlink "~/.cache/pypoetry/virtualenvs/borgbackup-poetry-sCSN7rR2-py3.8/bin/borgfs" to "~/.local/bin/borgfs"
+____________________________________________________________________________________________________
+(call: 'borg --version')
 
-You can now call "borg" and "borgfs" from commandline!
-
-~/borgbackup-poetry$ cd
-~$ borg --version
 borg 1.1.15
+```
+
+
+## update
+
+```bash
+~/borgbackup-install$ sudo ./borg-install.py update
+...
 ```
 
 ## update
 
-Just update the helper sources and borg e.g.:
-
 ```bash
-~$ cd borgbackup-poetry
-~/borgbackup-poetry$ make update
+~/borgbackup-install$ sudo ./borg-install.py uninstall
+...
 ```
