@@ -91,6 +91,7 @@ borg 1.1.15
 ## update
 
 ```bash
+~/borgbackup-install$ git pull origin master
 ~/borgbackup-install$ sudo ./borg-install.py update
 ...
 ```
